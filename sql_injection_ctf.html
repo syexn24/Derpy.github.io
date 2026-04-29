@@ -1,0 +1,194 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-mono); }
+  .terminal { background: #0d1117; border-radius: var(--border-radius-lg); padding: 0; overflow: hidden; border: 0.5px solid #30363d; }
+  .terminal-bar { background: #161b22; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 0.5px solid #30363d; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #28ca41; }
+  .terminal-title { color: #8b949e; font-size: 12px; margin-left: 8px; }
+  .terminal-body { padding: 24px; }
+  .site-title { color: #58a6ff; font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .site-sub { color: #8b949e; font-size: 12px; margin-bottom: 24px; }
+  .login-box { background: #161b22; border: 0.5px solid #30363d; border-radius: var(--border-radius-md); padding: 20px; margin-bottom: 16px; }
+  .login-box h2 { color: #e6edf3; font-size: 14px; margin-bottom: 16px; font-weight: 500; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; color: #8b949e; font-size: 12px; margin-bottom: 6px; }
+  .field input { width: 100%; background: #0d1117; border: 0.5px solid #30363d; border-radius: var(--border-radius-md); padding: 8px 12px; color: #e6edf3; font-family: var(--font-mono); font-size: 13px; outline: none; }
+  .field input:focus { border-color: #58a6ff; }
+  .btn { width: 100%; padding: 9px; background: #238636; border: none; border-radius: var(--border-radius-md); color: #fff; font-size: 13px; cursor: pointer; font-family: var(--font-mono); }
+  .btn:hover { background: #2ea043; }
+  .output { min-height: 36px; border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
+  .output.success { background: #0f2a1a; border: 0.5px solid #238636; color: #3fb950; display: block; }
+  .output.error { background: #2a0f0f; border: 0.5px solid #6e1a1a; color: #f85149; display: block; }
+  .output.info { background: #112233; border: 0.5px solid #1f4070; color: #58a6ff; display: block; }
+  .hint-section { margin-top: 16px; }
+  .hint-title { color: #8b949e; font-size: 11px; margin-bottom: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .hint-btn { background: transparent; border: 0.5px solid #30363d; border-radius: var(--border-radius-md); color: #8b949e; font-size: 12px; padding: 5px 10px; cursor: pointer; font-family: var(--font-mono); margin-right: 6px; margin-bottom: 6px; }
+  .hint-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .query-display { background: #0d1117; border: 0.5px solid #30363d; border-radius: var(--border-radius-md); padding: 10px 14px; font-size: 12px; color: #79c0ff; margin-top: 12px; display: none; word-break: break-all; }
+  .score { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .score-item { background: #161b22; border: 0.5px solid #30363d; border-radius: var(--border-radius-md); padding: 8px 14px; color: #e6edf3; font-size: 12px; }
+  .score-item span { color: #58a6ff; font-weight: 500; }
+  .flag { font-size: 15px; letter-spacing: 0.05em; background: #1a0f2a; border: 0.5px solid #6e3ab5; border-radius: var(--border-radius-md); padding: 12px 16px; color: #d2a8ff; display: inline-block; margin-top: 6px; }
+  .keyword { color: #ff7b72; }
+  .string { color: #a5d6ff; }
+</style>
+
+<div class="terminal">
+  <div class="terminal-bar">
+    <div class="dot dot-r"></div>
+    <div class="dot dot-y"></div>
+    <div class="dot dot-g"></div>
+    <span class="terminal-title">CTF Challenge — SQL Injection</span>
+  </div>
+  <div class="terminal-body">
+    <div class="site-title">SecureBank Login</div>
+    <div class="site-sub">[ CTF 보안 학습 챌린지 — SQL Injection으로 플래그를 찾으세요! ]</div>
+
+    <div class="score">
+      <div class="score-item">레벨: <span id="level-display">1 / 3</span></div>
+      <div class="score-item">클리어: <span id="cleared">0</span> / 3</div>
+    </div>
+
+    <div class="login-box">
+      <h2 id="challenge-title">챌린지 1 — 기본 인증 우회</h2>
+      <div class="field">
+        <label>USERNAME</label>
+        <input type="text" id="username" placeholder="admin" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label>PASSWORD</label>
+        <input type="text" id="password" placeholder="password" autocomplete="off" />
+      </div>
+      <button class="btn" onclick="tryLogin()">LOGIN</button>
+      <div class="output" id="output"></div>
+      <div class="query-display" id="query-display"></div>
+    </div>
+
+    <div class="hint-section">
+      <div class="hint-title">힌트</div>
+      <button class="hint-btn" onclick="showHint(1)">힌트 1</button>
+      <button class="hint-btn" onclick="showHint(2)">힌트 2</button>
+      <button class="hint-btn" onclick="showHint(3)">쿼리 보기</button>
+      <button class="hint-btn" onclick="resetChallenge()">리셋</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const challenges = [
+  {
+    title: "챌린지 1 — 기본 인증 우회",
+    query: (u, p) => `SELECT * FROM users WHERE username='${u}' AND password='${p}'`,
+    hints: [
+      "SQL에서 주석은 -- 또는 #으로 시작해요.",
+      "username에 ' OR '1'='1 를 입력하면 어떻게 될까요?",
+      "쿼리: SELECT * FROM users WHERE username='...' AND password='...'"
+    ],
+    check: (u, p) => {
+      const q = `SELECT * FROM users WHERE username='${u}' AND password='${p}'`;
+      return /('\s*OR\s*'?1'?\s*=\s*'?1|--\s*$|#\s*$|'\s*OR\s+1\s*=\s*1)/i.test(u) ||
+             /('\s*OR\s*'?1'?\s*=\s*'?1|--\s*$|#)/i.test(p) ||
+             u.includes("' --") || u.includes("'--") ||
+             u.toLowerCase().includes("' or") || p.toLowerCase().includes("' or");
+    },
+    flag: "FLAG{sql_1nj3ct10n_b4s1c_byp4ss}"
+  },
+  {
+    title: "챌린지 2 — UNION 기반 데이터 추출",
+    query: (u, p) => `SELECT id, username FROM users WHERE username='${u}'`,
+    hints: [
+      "UNION SELECT를 사용하면 다른 테이블의 데이터를 가져올 수 있어요.",
+      "컬럼 수를 맞춰야 해요. 이 쿼리는 컬럼이 2개예요.",
+      "시도: ' UNION SELECT 1,'FLAG{...}'--"
+    ],
+    check: (u, p) => {
+      return /UNION\s+SELECT/i.test(u);
+    },
+    flag: "FLAG{un10n_s3l3ct_d4t4_3xtr4ct10n}"
+  },
+  {
+    title: "챌린지 3 — Blind SQL Injection",
+    query: (u, p) => `SELECT * FROM users WHERE id=${u}`,
+    hints: [
+      "숫자형 파라미터는 따옴표 없이 주입돼요.",
+      "1 AND 1=1 과 1 AND 1=2 의 결과가 다르면 블라인드 SQLi예요.",
+      "시도: 1 AND 1=1 (참) vs 1 AND 1=2 (거짓)"
+    ],
+    check: (u, p) => {
+      return /\d+\s+AND\s+\d+=\d+/i.test(u) || /\d+\s+OR\s+/i.test(u) || /SLEEP|WAITFOR|BENCHMARK/i.test(u);
+    },
+    flag: "FLAG{bl1nd_sql1_tr00_0r_f4ls3}"
+  }
+];
+
+let currentLevel = 0;
+let cleared = 0;
+
+function updateUI() {
+  document.getElementById('level-display').textContent = `${currentLevel + 1} / 3`;
+  document.getElementById('cleared').textContent = cleared;
+  document.getElementById('challenge-title').textContent = challenges[currentLevel].title;
+  document.getElementById('output').className = 'output';
+  document.getElementById('output').innerHTML = '';
+  document.getElementById('query-display').style.display = 'none';
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+}
+
+function tryLogin() {
+  const u = document.getElementById('username').value;
+  const p = document.getElementById('password').value;
+  const ch = challenges[currentLevel];
+  const out = document.getElementById('output');
+  const qd = document.getElementById('query-display');
+
+  qd.style.display = 'block';
+  const raw = ch.query(u, p);
+  qd.innerHTML = formatQuery(raw);
+
+  if (ch.check(u, p)) {
+    if (currentLevel < challenges.length) {
+      cleared = Math.max(cleared, currentLevel + 1);
+    }
+    out.className = 'output success';
+    out.innerHTML = `인증 우회 성공!<br><div class="flag">${ch.flag}</div>`;
+    if (currentLevel < challenges.length - 1) {
+      setTimeout(() => {
+        currentLevel++;
+        updateUI();
+      }, 3000);
+    }
+  } else {
+    out.className = 'output error';
+    out.textContent = '로그인 실패. 올바른 자격증명이 아닙니다.';
+  }
+}
+
+function formatQuery(q) {
+  return q
+    .replace(/\b(SELECT|FROM|WHERE|AND|OR|UNION|INSERT|UPDATE|DELETE|DROP|TABLE)\b/g, '<span class="keyword">$1</span>')
+    .replace(/'([^']*)'/g, "'<span class=\"string\">$1</span>'");
+}
+
+function showHint(n) {
+  const out = document.getElementById('output');
+  const hints = challenges[currentLevel].hints;
+  out.className = 'output info';
+  out.textContent = hints[n - 1] || '';
+}
+
+function resetChallenge() {
+  document.getElementById('output').className = 'output';
+  document.getElementById('output').innerHTML = '';
+  document.getElementById('query-display').style.display = 'none';
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+}
+
+document.getElementById('username').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+</script>
