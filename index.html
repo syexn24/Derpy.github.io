@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>자율연구</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sidebar-bg: #f7f6f3;
+      --sidebar-width: 240px;
+      --sidebar-text: #37352f;
+      --sidebar-muted: #9b9a97;
+      --sidebar-hover: #e9e8e4;
+      --sidebar-active: #e3e2de;
+      --text-primary: #37352f;
+      --text-secondary: #9b9a97;
+      --border: #e8e7e3;
+      --font: 'Noto Sans KR', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: #ffffff;
+      color: var(--text-primary);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      height: 100vh;
+      overflow-y: auto;
+      flex-shrink: 0;
+      padding: 12px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .sidebar-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--sidebar-muted);
+      padding: 8px 14px 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      font-size: 13.5px;
+      color: var(--sidebar-text);
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 1px 6px;
+      transition: background 0.1s;
+      user-select: none;
+    }
+
+    .sidebar-item:hover { background: var(--sidebar-hover); }
+    .sidebar-item.active { background: var(--sidebar-active); font-weight: 500; }
+    .sidebar-item .icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
+    .sidebar-divider { height: 1px; background: var(--border); margin: 8px 14px; }
+
+    .main { flex: 1; overflow-y: auto; }
+
+    .page {
+      display: none;
+      padding: 80px 96px 120px;
+      max-width: 860px;
+      animation: fadein 0.15s ease;
+    }
+    .page.active { display: block; }
+
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(5px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .page-title {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .page-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+
+    .date-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 2px;
+      transition: background 0.1s;
+    }
+    .date-item:hover { background: #f1f0ed; }
+    .date-item .d-icon { font-size: 14px; color: var(--text-secondary); }
+    .date-item .d-text { font-size: 14px; color: var(--text-primary); }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      margin-bottom: 32px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.1s;
+    }
+    .back-btn:hover { background: var(--sidebar-hover); color: var(--text-primary); }
+
+    .empty-hint { margin-top: 40px; color: #c7c5c0; font-size: 14px; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #d3d1cb; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-label">개인 페이지</div>
+
+  <!-- ✏️ 사이드바 항목 수정 -->
+  <div class="sidebar-item" id="nav-s1" onclick="showPage('s1')">
+    <span class="icon">😊</span><span>To Do List</span>
+  </div>
+  <div class="sidebar-item" id="nav-s2" onclick="showPage('s2')">
+    <span class="icon">📋</span><span>정보과학</span>
+  </div>
+  <div class="sidebar-item active" id="nav-home" onclick="showPage('home')">
+    <span class="icon">📄</span><span>자율연구</span>
+  </div>
+  <div class="sidebar-item" id="nav-s4" onclick="showPage('s4')">
+    <span class="icon">✨</span><span>방학</span>
+  </div>
+  <div class="sidebar-item" id="nav-s5" onclick="showPage('s5')">
+    <span class="icon">📄</span><span>생기부 특기사항</span>
+  </div>
+
+  <div class="sidebar-divider"></div>
+</nav>
+
+<main class="main">
+
+  <!-- 홈 페이지 -->
+  <div class="page active" id="page-home">
+    <div class="page-title">자율연구</div>
+    <div class="page-divider"></div>
+    <!-- ✏️ 날짜 항목 수정 -->
+    <div class="date-item" onclick="showPage('d1')">
+      <span class="d-icon">📄</span>
+      <span class="d-text">26. 03. 11. WED</span>
+    </div>
+    <div class="date-item" onclick="showPage('d2')">
+      <span class="d-icon">📄</span>
+      <span class="d-text">26. 03. 18. WED</span>
+    </div>
+    <div class="date-item" onclick="showPage('d3')">
+      <span class="d-icon">📄</span>
+      <span class="d-text">26. 04. 01. WED</span>
+    </div>
+  </div>
+
+  <!-- 사이드바 페이지들 -->
+  <div class="page" id="page-s1">
+    <div class="back-btn" onclick="showPage('home')">← 돌아가기</div>
+    <div class="page-title">To Do List</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">아직 내용이 없어요.</div>
+  </div>
+
+  <div class="page" id="page-s2">
+    <div class="back-btn" onclick="showPage('home')">← 돌아가기</div>
+    <div class="page-title">정보과학</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">아직 내용이 없어요.</div>
+  </div>
+
+  <div class="page" id="page-s4">
+    <div class="back-btn" onclick="showPage('home')">← 돌아가기</div>
+    <div class="page-title">방학</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">아직 내용이 없어요.</div>
+  </div>
+
+  <div class="page" id="page-s5">
+    <div class="back-btn" onclick="showPage('home')">← 돌아가기</div>
+    <div class="page-title">생기부 특기사항</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">아직 내용이 없어요.</div>
+  </div>
+
+  <!-- 날짜 페이지들 -->
+  <div class="page" id="page-d1">
+    <div class="back-btn" onclick="showPage('home')">← 자율연구로 돌아가기</div>
+    <div class="page-title">26. 03. 11. WED</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">아직 내용이 없어요.</div>
+  </div>
+
+  <div class="page" id="page-d2">
+    <div class="back-btn" onclick="showPage('home')">← 자율연구로 돌아가기</div>
+    <div class="page-title">26. 03. 18. WED</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">아직 내용이 없어요.</div>
+  </div>
+
+  <div class="page" id="page-d3">
+    <div class="back-btn" onclick="showPage('home')">← 자율연구로 돌아가기</div>
+    <div class="page-title">26. 04. 01. WED</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">아직 내용이 없어요.</div>
+  </div>
+
+</main>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('active');
+}
+</script>
+</body>
+</html>
