@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<!-- 비밀번호 오버레이 -->
+<!-- find_password! -->
 <div id="pw-overlay">
   <div id="pw-box">
     <div style="font-size:15px;color:var(--text-primary);margin-bottom:12px;">🔒 비밀번호를 입력하세요</div>
@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<!-- 실제 내용 (처음엔 숨김) -->
+<!-- main page -->
 <div id="main-content" style="display:none;">
   <nav class="sidebar">
     <div class="sidebar-label">개인 페이지</div>
@@ -33,10 +33,11 @@
       <a class="back-btn" href="index.html">← 자율연구로 돌아가기</a>
       <div class="page-title">26. 05. 06. WED</div>
       <div class="page-divider"></div>
-      <div class="empty-hint">보고서, 참고문헌 정리</div>
+      <div class="empty-hint">: 개발자만 볼 수 있는 파일이 포함되어있습니다.</div>
       <div class="content">
         <h2>주제</h2>
         <p>내용을 여기에 작성하세요.</p>
+        <button onclick="showFile()">📄 파일 열기</button>
       </div>
     </div>
   </main>
@@ -44,7 +45,14 @@
 
 <script>
   eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('8 6(){p 0=2.1(\'0-3\').9;7(0==="o@n"){2.1(\'0-m\').5.4=\'l\';2.1(\'k-j\').5.4=\'i\'}h{2.1(\'0-g\').5.4=\'f\';2.1(\'0-3\').9=\'\'}}2.1(\'0-3\').d(\'c\',8(e){7(e.b===\'a\')6()});',26,26,'pw|getElementById|document|input|display|style|checkPW|if|function|value|Enter|key|keydown|addEventListener||block|error|else|flex|content|main|none|overlay|5SVV0rD|P|const'.split('|'),0,{}))
-
+function showFile() {
+    console.clear();
+    console.log('%c📄 files.txt', 'color:#37352f; font-size:16px; font-weight:bold;');
+    console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'color:#e8e7e3;');
+    console.log('%c여기에 파일 내용을 작성하세요.', 'color:#37352f; font-size:13px;');
+    console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'color:#e8e7e3;');
+    console.log('%c🔍 콘솔을 열어야 볼 수 있었죠?', 'color:#9b9a97; font-size:11px;');
+  }
 </script>
 </body>
 </html>
