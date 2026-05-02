@@ -140,11 +140,16 @@ body {
 ::-webkit-scrollbar-thumb { background: #d3d1cb; border-radius: 3px; }
 
 #pw-overlay {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #fff;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   z-index: 9999;
   gap: 12px;
 }
@@ -163,5 +168,15 @@ body {
   padding: 8px 20px;
   font-size: 14px;
   cursor: pointer;
+}
+#pw-box {
+  background: #fff;
+  border-radius: 10px;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
 #pw-error { color: #e03e3e; font-size: 13px; display: none; }
