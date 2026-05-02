@@ -7,6 +7,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
+<script>
+  (function() {
+    const pw = prompt("🔒 비밀번호를 입력하세요");
+    if (pw !== "여기에비밀번호") {
+      document.body.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:'Noto Sans KR',sans-serif;color:#9b9a97;font-size:15px;">
+          🔒 접근이 거부되었습니다.
+        </div>`;
+    }
+  })();
+</script>
+</body>
+  
 <body>
 
 <nav class="sidebar">
