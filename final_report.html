@@ -9,11 +9,11 @@
 </head>
 <script>
   (function() {
-    const pw = prompt("🔒 비밀번호를 입력하세요");
-    if (pw !== "여기에비밀번호") {
+    const pw = prompt("🔒 Enter your password");
+    if (pw === null || pw !== "P@5SVV0rD") {
       document.body.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:'Noto Sans KR',sans-serif;color:#9b9a97;font-size:15px;">
-          🔒 접근이 거부되었습니다.
+          🔒 Failed.
         </div>`;
     }
   })();
