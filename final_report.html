@@ -29,10 +29,12 @@
 </main>
 
 <div id="pw-overlay">
-  <div style="font-size:15px;color:var(--text-primary);">🔒 비밀번호를 입력하세요</div>
-  <input type="password" id="pw-input" placeholder="password" />
-  <button onclick="checkPW()">확인</button>
-  <div id="pw-error">❌ 비밀번호가 틀렸습니다.</div>
+  <div id="pw-box">
+    <div style="font-size:15px;color:var(--text-primary);margin-bottom:12px;">🔒 비밀번호를 입력하세요</div>
+    <input type="password" id="pw-input" placeholder="password" />
+    <button onclick="checkPW()">확인</button>
+    <div id="pw-error">❌ 비밀번호가 틀렸습니다.</div>
+  </div>
 </div>
 
 <script>
