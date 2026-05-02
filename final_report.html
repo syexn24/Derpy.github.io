@@ -7,6 +7,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-label">개인 페이지</div>
+  <a class="sidebar-item" href="index.html"><span class="icon">😊</span><span>To Do List</span></a>
+  <a class="sidebar-item" href="index.html"><span class="icon">📋</span><span>정보과학</span></a>
+  <a class="sidebar-item active" href="index.html"><span class="icon">📄</span><span>자율연구</span></a>
+  <div class="sidebar-divider"></div>
+</nav>
+<main class="main">
+  <div class="page active">
+    <a class="back-btn" href="index.html">← 자율연구로 돌아가기</a>
+    <div class="page-title">26. 05. 06. WED</div>
+    <div class="page-divider"></div>
+    <div class="empty-hint">보고서, 참고문헌 정리</div>
+    <div class="content">
+      <h2>주제</h2>
+      <p>내용을 여기에 작성하세요.</p>
+    </div>
+  </div>
+</main>
+
+<!-- ✅ body 닫히기 직전에 위치해야 함 -->
 <script>
   (function() {
     const pw = prompt("🔒 Enter your password");
@@ -18,33 +40,5 @@
     }
   })();
 </script>
-</body>
-  
-<body>
-
-<nav class="sidebar">
-  <div class="sidebar-label">개인 페이지</div>
-  <a class="sidebar-item" href="index.html"><span class="icon">😊</span><span>To Do List</span></a>
-  <a class="sidebar-item" href="index.html"><span class="icon">📋</span><span>정보과학</span></a>
-  <a class="sidebar-item active" href="index.html"><span class="icon">📄</span><span>자율연구</span></a>
-  <div class="sidebar-divider"></div>
-</nav>
-
-<main class="main">
-  <div class="page active">
-    <a class="back-btn" href="index.html">← 자율연구로 돌아가기</a>
-    <div class="page-title">26. 05. 06. WED</div>
-    <div class="page-divider"></div>
-    <div class="empty-hint">보고서, 참고문헌 정리</div>
-
-    <!-- reports -->
-    <div class="content">
-      <h2>주제</h2>
-      <p>내용을 여기에 작성하세요.</p>
-    </div>
-
-  </div>
-</main>
-
 </body>
 </html>
