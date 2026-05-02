@@ -28,17 +28,26 @@
   </div>
 </main>
 
-<!-- ✅ body 닫히기 직전에 위치해야 함 -->
+<div id="pw-overlay">
+  <div style="font-size:15px;color:var(--text-primary);">🔒 비밀번호를 입력하세요</div>
+  <input type="password" id="pw-input" placeholder="password" />
+  <button onclick="checkPW()">확인</button>
+  <div id="pw-error">❌ 비밀번호가 틀렸습니다.</div>
+</div>
+
 <script>
-  (function() {
-    const pw = prompt("🔒 Enter your password");
-    if (pw === null || pw !== "P@5SVV0rD") {
-      document.body.innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:'Noto Sans KR',sans-serif;color:#9b9a97;font-size:15px;">
-          🔒 Failed.
-        </div>`;
+  function checkPW() {
+    const pw = document.getElementById('pw-input').value;
+    if (pw === "P@5SVV0rD") {
+      document.getElementById('pw-overlay').style.display = 'none';
+    } else {
+      document.getElementById('pw-error').style.display = 'block';
+      document.getElementById('pw-input').value = '';
     }
-  })();
+  }
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPW();
+  });
 </script>
 </body>
 </html>
