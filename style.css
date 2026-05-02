@@ -65,6 +65,7 @@ body {
 .main { flex: 1; overflow-y: auto; }
 
 .page {
+  display: none;   
   padding: 80px 96px 120px;
   max-width: 860px;
   animation: fadein 0.15s ease;
